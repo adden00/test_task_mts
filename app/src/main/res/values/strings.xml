@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">TestTaskMTS</string>
+    <string name="currency_converter">Конвертер валюты</string>
+    <string name="name">name…</string>
+    <string name="value">value…</string>
 </resources>
