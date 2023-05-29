@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.addisov00.testtaskmts.R
 import com.addisov00.testtaskmts.databinding.CurrencyItemBinding
-import com.addisov00.testtaskmts.presentation.main_screen.model.CurrencyItem
+import com.addisov00.testtaskmts.presentation.main_screen.models.CurrencyItem
 
 class CurrencyAdapter: ListAdapter<CurrencyItem, CurrencyAdapter.ItemHolder>(object : DiffUtil.ItemCallback<CurrencyItem>() {
     override fun areItemsTheSame(oldItem: CurrencyItem, newItem: CurrencyItem): Boolean =
@@ -24,7 +24,7 @@ class CurrencyAdapter: ListAdapter<CurrencyItem, CurrencyAdapter.ItemHolder>(obj
         fun setData(item: CurrencyItem) {
             val binding = CurrencyItemBinding.bind(view)
             binding.tvCurrencyName.text = item.name
-            binding.tvCurrencyValue.text = item.value
+            binding.tvCurrencyValue.text = item.value.toString()
         }
     }
 

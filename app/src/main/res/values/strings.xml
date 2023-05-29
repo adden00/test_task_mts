@@ -3,4 +3,6 @@
     <string name="currency_converter">Конвертер валюты</string>
     <string name="name">name…</string>
     <string name="value">value…</string>
+    <string name="last_updated">последнее обновление:</string>
+    <string name="never">никогда</string>
 </resources>
