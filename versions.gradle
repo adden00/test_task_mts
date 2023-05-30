@@ -14,6 +14,7 @@ ext.versions = [
         retrofitSerialize    : '0.8.0',
         okHttp               : '4.11.0',
         dagger               : '2.45',
+        room                 : '2.5.1'
 
 
 ]
@@ -34,6 +35,9 @@ ext.deps = [
         kotlinx_serialization: "org.jetbrains.kotlinx:kotlinx-serialization-json:${versions.kotlinx_serialization}",
         dagger               : "com.google.dagger:dagger:${versions.dagger}",
         daggetKapt           : "com.google.dagger:dagger-compiler:${versions.dagger}",
+        room                 : "androidx.room:room-runtime:${versions.room}",
+        roomKapt             : "androidx.room:room-compiler:${versions.room}",
+        roomKtx              : "androidx.room:room-ktx:${versions.room}",
 
 
 ]

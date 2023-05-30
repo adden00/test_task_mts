@@ -1,7 +1,7 @@
 package com.addisov00.testtaskmts.common.di
 
 import com.addisov00.testtaskmts.common.Constants
-import com.addisov00.testtaskmts.data.CurrencyApiClient
+import com.addisov00.testtaskmts.data.network.CurrencyApiClient
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides

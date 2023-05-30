@@ -3,6 +3,7 @@ package com.addisov00.testtaskmts.presentation.main_screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.addisov00.testtaskmts.domain.CurrencyRepository
 import com.addisov00.testtaskmts.domain.usecases.GetRubblesRateUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -11,13 +12,19 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Provider
 
-class MainViewModel @Inject constructor(private val getRubblesRateUseCase: GetRubblesRateUseCase) :
+class MainViewModel @Inject constructor(
+    private val getRubblesRateUseCase: GetRubblesRateUseCase,
+    private val repository: CurrencyRepository
+) :
     ViewModel() {
 
     private val _screenState = MutableStateFlow(ScreenState())
     val screenState: StateFlow<ScreenState>
         get() = _screenState.asStateFlow()
 
+    init {
+        newEvent(ScreenEvent.UpdateCurrencies)
+    }
 
     fun newEvent(event: ScreenEvent) {
         when (event) {
@@ -31,16 +38,14 @@ class MainViewModel @Inject constructor(private val getRubblesRateUseCase: GetRu
                 )
             }
 
-            is ScreenEvent.LoadCurrencies -> {
-                _screenState.value = _screenState.value.copy(isLoading = true, isSearching = false)
+            is ScreenEvent.SubscribeOnCurrencies -> {
                 viewModelScope.launch {
-                    val result = getRubblesRateUseCase()
-                    _screenState.value =
-                        _screenState.value.copy(
-                            currentCurrencyList = result.currencyList,
-                            isLoading = false,
-                            updatedDate = result.updatedDate
+                    getRubblesRateUseCase().collect {
+                        _screenState.value = _screenState.value.copy(
+                            currentCurrencyList = it.currencyList,
+                            updatedDate = it.updatedDate
                         )
+                    }
                 }
             }
 
@@ -49,6 +54,18 @@ class MainViewModel @Inject constructor(private val getRubblesRateUseCase: GetRu
                     isSearching = false,
                     searchingCurrencyList = listOf()
                 )
+            }
+
+            is ScreenEvent.UpdateCurrencies -> {
+                _screenState.value = _screenState.value.copy(isLoading = true, isSearching = false)
+                viewModelScope.launch {
+                    try {
+                        repository.updateCurrencies()
+                    } catch (e: Exception) {
+                    } //TODO: добавить обработку ошибки
+                    _screenState.value = _screenState.value.copy(isLoading = false)
+
+                }
             }
         }
 

@@ -85,7 +85,7 @@ class MainFragment : Fragment() {
 
     private fun render(state: ScreenState) {
         if (state.currentCurrencyList == null)
-            viewModel.newEvent(ScreenEvent.LoadCurrencies)
+            viewModel.newEvent(ScreenEvent.SubscribeOnCurrencies)
 
         binding.pbCurrenciesLoading.visibility = if (state.isLoading) View.VISIBLE else View.GONE
         if (state.isSearching)
