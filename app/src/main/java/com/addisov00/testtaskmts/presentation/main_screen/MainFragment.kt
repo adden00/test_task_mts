@@ -9,18 +9,23 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.core.os.bundleOf
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.addisov00.testtaskmts.R
+import com.addisov00.testtaskmts.common.ClickListener
+import com.addisov00.testtaskmts.common.Constants
 import com.addisov00.testtaskmts.common.di.ui.DaggerCurrencyListComponent
 import com.addisov00.testtaskmts.databinding.FragmentMainBinding
 import com.addisov00.testtaskmts.getAppComponent
 import com.addisov00.testtaskmts.presentation.MainActivity
+import com.addisov00.testtaskmts.presentation.main_screen.models.CurrencyItem
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -31,7 +36,7 @@ class MainFragment : Fragment() {
     private val binding: FragmentMainBinding
         get() = _binding!!
     private val currencyAdapter by lazy {
-        CurrencyAdapter()
+        CurrencyAdapter(CurrencyItemClickListener())
     }
 
     @Inject
@@ -93,6 +98,7 @@ class MainFragment : Fragment() {
 
 
     private fun setupMenu() {
+
         (requireActivity() as MainActivity).setSupportActionBar(binding.toolbar)
         (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
 
@@ -118,7 +124,17 @@ class MainFragment : Fragment() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return true
             }
-        })
+        }, viewLifecycleOwner)
+    }
+
+    inner class CurrencyItemClickListener : ClickListener<CurrencyItem> {
+        override fun onClick(item: CurrencyItem) {
+            val bundle = bundleOf(Constants.CURRENCY_ITEM_KEY to item)
+            requireActivity().findNavController(R.id.fragmentContainerView).navigate(
+                R.id.action_mainFragment_to_converterFragment, bundle
+            )
+        }
+
     }
 
 }

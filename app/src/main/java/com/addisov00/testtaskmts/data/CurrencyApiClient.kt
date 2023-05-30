@@ -11,6 +11,6 @@ interface CurrencyApiClient {
     @GET("latest")
     suspend fun getCurrency(
         @Query("access_key")
-        apiKey: String = Constants.apiKey
+        apiKey: String = Constants.API_KEY
     ): CurrencyResponse
 }

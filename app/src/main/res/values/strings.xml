@@ -6,4 +6,7 @@
     <string name="last_updated">последнее обновление:</string>
     <string name="never">никогда</string>
     <string name="search">search</string>
+    <string name="convertation">Конвертация</string>
+    <string name="rate">rate</string>
+    <string name="rub">RUB</string>
 </resources>

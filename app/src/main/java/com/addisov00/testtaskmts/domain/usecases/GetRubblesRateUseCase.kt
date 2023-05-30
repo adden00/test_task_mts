@@ -9,7 +9,7 @@ class GetRubblesRateUseCase @Inject constructor(private val repository: Currency
     suspend operator fun invoke(): CurrencyData {
         val baseCurrencyRates = repository.getCurrencies()
         val rubleRate = baseCurrencyRates.currencyList.find {
-            it.name == Constants.rub
+            it.name == Constants.RUB
         }?.value ?: throw Exception("Ruble rate didn`t received!")
         return baseCurrencyRates.copy(
             currencyList = baseCurrencyRates.currencyList.map {
