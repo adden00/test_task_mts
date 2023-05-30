@@ -16,12 +16,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:navigationIcon="@drawable/ic_dollar"
-            android:title="@string/currency_converter" />
+            app:navigationIcon="@drawable/ic_dollar"
+            app:titleTextAppearance="@style/text_header"
+            app:title="@string/currency_converter"
+            app:menu="@menu/home_menu" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <TextView

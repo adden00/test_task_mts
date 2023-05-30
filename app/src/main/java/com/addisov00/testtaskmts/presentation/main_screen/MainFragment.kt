@@ -3,8 +3,14 @@ package com.addisov00.testtaskmts.presentation.main_screen
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -14,6 +20,7 @@ import com.addisov00.testtaskmts.R
 import com.addisov00.testtaskmts.common.di.ui.DaggerCurrencyListComponent
 import com.addisov00.testtaskmts.databinding.FragmentMainBinding
 import com.addisov00.testtaskmts.getAppComponent
+import com.addisov00.testtaskmts.presentation.MainActivity
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -49,6 +56,7 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setUi()
+        setupMenu()
     }
 
     override fun onDestroyView() {
@@ -65,14 +73,52 @@ class MainFragment : Fragment() {
             .onEach(::render)
             .launchIn(lifecycleScope)
 
+        binding.toolbar.inflateMenu(R.menu.home_menu)
+
     }
 
 
     private fun render(state: ScreenState) {
+        if (state.currentCurrencyList == null)
+            viewModel.newEvent(ScreenEvent.LoadCurrencies)
+
         binding.pbCurrenciesLoading.visibility = if (state.isLoading) View.VISIBLE else View.GONE
-        currencyAdapter.submitList(state.currentCurrencyList)
+        if (state.isSearching)
+            currencyAdapter.submitList(state.searchingCurrencyList)
+        else
+            currencyAdapter.submitList(state.currentCurrencyList)
         val dateText = "${requireContext().getString(R.string.last_updated)} ${state.updatedDate}"
         binding.tvDate.text = dateText
+    }
+
+
+    private fun setupMenu() {
+        (requireActivity() as MainActivity).setSupportActionBar(binding.toolbar)
+        (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
+
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.home_menu, menu)
+                val searchView = menu.findItem(R.id.actionSearct).actionView as SearchView
+                searchView.queryHint = "search..."
+                searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String?): Boolean {
+                        return true
+                    }
+
+                    override fun onQueryTextChange(newText: String?): Boolean {
+                        if (newText.isNullOrEmpty())
+                            viewModel.newEvent(ScreenEvent.StopSearch)
+                        else
+                            viewModel.newEvent(ScreenEvent.SearchCurrency(newText))
+                        return false
+                    }
+                })
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return true
+            }
+        })
     }
 
 }

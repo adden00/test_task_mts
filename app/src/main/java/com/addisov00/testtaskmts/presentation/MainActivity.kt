@@ -1,8 +1,7 @@
 package com.addisov00.testtaskmts.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.addisov00.testtaskmts.R
+import androidx.appcompat.app.AppCompatActivity
 import com.addisov00.testtaskmts.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -11,5 +10,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
     }
 }
