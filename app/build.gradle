@@ -54,6 +54,7 @@ dependencies {
     implementation deps.okHttp
     implementation deps.kotlinx_serialization
     implementation deps.dagger
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     kapt deps.daggetKapt
     implementation deps.room
     implementation deps.roomKtx

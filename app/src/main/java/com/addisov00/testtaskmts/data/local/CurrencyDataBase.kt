@@ -3,7 +3,6 @@ package com.addisov00.testtaskmts.data.local
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.addisov00.testtaskmts.data.CurrencyTypeConverters
 import com.addisov00.testtaskmts.data.local.entity.AllCurrenciesEntity
 import com.addisov00.testtaskmts.data.local.entity.CurrencyEntity
 

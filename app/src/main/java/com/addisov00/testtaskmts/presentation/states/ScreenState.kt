@@ -1,4 +1,4 @@
-package com.addisov00.testtaskmts.presentation.main_screen
+package com.addisov00.testtaskmts.presentation.states
 
 import com.addisov00.testtaskmts.presentation.main_screen.models.CurrencyItem
 
@@ -7,5 +7,5 @@ data class ScreenState(
     val searchingCurrencyList: List<CurrencyItem> = listOf(),
     val isLoading: Boolean = false,
     val isSearching: Boolean = false,
-    val updatedDate: String = ""
+    val updatedDate: String = "",
 )

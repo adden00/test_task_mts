@@ -19,13 +19,17 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.addisov00.testtaskmts.R
-import com.addisov00.testtaskmts.common.ClickListener
 import com.addisov00.testtaskmts.common.Constants
 import com.addisov00.testtaskmts.common.di.ui.DaggerCurrencyListComponent
+import com.addisov00.testtaskmts.common.utills.ClickListener
 import com.addisov00.testtaskmts.databinding.FragmentMainBinding
 import com.addisov00.testtaskmts.getAppComponent
 import com.addisov00.testtaskmts.presentation.MainActivity
 import com.addisov00.testtaskmts.presentation.main_screen.models.CurrencyItem
+import com.addisov00.testtaskmts.presentation.states.ScreenEffects
+import com.addisov00.testtaskmts.presentation.states.ScreenEvent
+import com.addisov00.testtaskmts.presentation.states.ScreenState
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -78,7 +82,15 @@ class MainFragment : Fragment() {
             .onEach(::render)
             .launchIn(lifecycleScope)
 
+        viewModel.screenEffects
+            .flowWithLifecycle(lifecycle)
+            .onEach(::handleEffect)
+            .launchIn(lifecycleScope)
+
         binding.toolbar.inflateMenu(R.menu.home_menu)
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.newEvent(ScreenEvent.UpdateCurrencies)
+        }
 
     }
 
@@ -87,13 +99,28 @@ class MainFragment : Fragment() {
         if (state.currentCurrencyList == null)
             viewModel.newEvent(ScreenEvent.SubscribeOnCurrencies)
 
-        binding.pbCurrenciesLoading.visibility = if (state.isLoading) View.VISIBLE else View.GONE
+//        binding.pbCurrenciesLoading.visibility = if (state.isLoading) View.VISIBLE else View.GONE
+        binding.swipeRefresh.isRefreshing = state.isLoading
         if (state.isSearching)
             currencyAdapter.submitList(state.searchingCurrencyList)
         else
             currencyAdapter.submitList(state.currentCurrencyList)
         val dateText = "${requireContext().getString(R.string.last_updated)} ${state.updatedDate}"
         binding.tvDate.text = dateText
+
+    }
+
+    private fun handleEffect(effect: ScreenEffects) {
+        when (effect) {
+            is ScreenEffects.Init -> Unit
+            is ScreenEffects.ShowErrorWhileLoading -> showSnackbar(getString(R.string.error_while_loading_message))
+            is ScreenEffects.ShowNoInternetMessage -> showSnackbar(getString(R.string.error_no_internet_message))
+
+        }
+    }
+
+    private fun showSnackbar(message: String) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
     }
 
 

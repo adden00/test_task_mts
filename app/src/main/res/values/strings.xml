@@ -9,4 +9,6 @@
     <string name="convertation">Конвертация</string>
     <string name="rate">rate</string>
     <string name="rub">RUB</string>
+    <string name="error_no_internet_message">Нет подключения к интернету!</string>
+    <string name="error_while_loading_message">Ошибка во время обновления данных!</string>
 </resources>

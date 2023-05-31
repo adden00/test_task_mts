@@ -1,5 +1,6 @@
 package com.addisov00.testtaskmts.data
 
+import com.addisov00.testtaskmts.common.utills.WrongRequestException
 import com.addisov00.testtaskmts.data.local.CurrencyDao
 import com.addisov00.testtaskmts.data.network.CurrencyApiClient
 import com.addisov00.testtaskmts.domain.CurrencyRepository
@@ -21,7 +22,7 @@ class CurrencyRepositoryImpl(private val api: CurrencyApiClient, private val dao
             dao.clearCurrencies()
             dao.insertCurrencies(CurrencyData(result.date, resultList).toEntity())
         } else
-            throw Exception("error while loading") //TODO: создать свое иключение
+            throw WrongRequestException("error while loading")
     }
 
     override fun getCurrencies(): Flow<CurrencyData> =

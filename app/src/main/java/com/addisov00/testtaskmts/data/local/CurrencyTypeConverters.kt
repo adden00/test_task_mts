@@ -1,4 +1,4 @@
-package com.addisov00.testtaskmts.data
+package com.addisov00.testtaskmts.data.local
 
 import androidx.room.TypeConverter
 import com.addisov00.testtaskmts.data.local.entity.CurrencyEntity

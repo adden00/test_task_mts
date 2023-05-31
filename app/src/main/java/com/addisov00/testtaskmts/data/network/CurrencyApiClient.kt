@@ -5,7 +5,6 @@ import com.addisov00.testtaskmts.data.network.models.CurrencyResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-
 interface CurrencyApiClient {
 
     @GET("latest")

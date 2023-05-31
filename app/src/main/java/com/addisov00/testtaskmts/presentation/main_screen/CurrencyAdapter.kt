@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.addisov00.testtaskmts.R
-import com.addisov00.testtaskmts.common.ClickListener
+import com.addisov00.testtaskmts.common.utills.ClickListener
 import com.addisov00.testtaskmts.databinding.CurrencyItemBinding
 import com.addisov00.testtaskmts.presentation.main_screen.models.CurrencyItem
 
