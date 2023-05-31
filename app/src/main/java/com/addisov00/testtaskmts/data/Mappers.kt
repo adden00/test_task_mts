@@ -7,7 +7,7 @@ import com.addisov00.testtaskmts.presentation.main_screen.models.CurrencyItem
 
 fun AllCurrenciesEntity?.toCurrencyData(): CurrencyData =
     CurrencyData(
-        this?.updatedDate ?: "давно",
+        this?.updatedDate ?: "",
         this?.currencies?.map {
             it.toCurrencyItem()
         } ?: listOf()

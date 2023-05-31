@@ -1,4 +1,4 @@
-package com.addisov00.testtaskmts.presentation.states
+package com.addisov00.testtaskmts.presentation.main_screen.states
 
 import com.addisov00.testtaskmts.presentation.main_screen.models.CurrencyItem
 

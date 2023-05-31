@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.addisov00.testtaskmts.R
 import com.addisov00.testtaskmts.common.Constants
-import com.addisov00.testtaskmts.common.customGetParcelable
+import com.addisov00.testtaskmts.common.utills.customGetParcelable
 import com.addisov00.testtaskmts.databinding.FragmentConverterBinding
 import com.addisov00.testtaskmts.presentation.main_screen.models.CurrencyItem
 
@@ -20,7 +20,7 @@ class ConverterFragment : Fragment() {
     private val binding: FragmentConverterBinding
         get() = _binding!!
 
-    val currentCurrencyItem: CurrencyItem by lazy {
+    private val currentCurrencyItem: CurrencyItem by lazy {
         arguments?.customGetParcelable(Constants.CURRENCY_ITEM_KEY) as? CurrencyItem
             ?: throw Exception("currency is null!!")
     }

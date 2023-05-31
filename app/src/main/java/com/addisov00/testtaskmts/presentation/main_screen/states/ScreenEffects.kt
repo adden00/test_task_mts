@@ -1,4 +1,4 @@
-package com.addisov00.testtaskmts.presentation.states
+package com.addisov00.testtaskmts.presentation.main_screen.states
 
 sealed class ScreenEffects {
     object ShowNoInternetMessage : ScreenEffects()

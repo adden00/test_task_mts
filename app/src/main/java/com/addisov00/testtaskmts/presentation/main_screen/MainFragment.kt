@@ -26,9 +26,9 @@ import com.addisov00.testtaskmts.databinding.FragmentMainBinding
 import com.addisov00.testtaskmts.getAppComponent
 import com.addisov00.testtaskmts.presentation.MainActivity
 import com.addisov00.testtaskmts.presentation.main_screen.models.CurrencyItem
-import com.addisov00.testtaskmts.presentation.states.ScreenEffects
-import com.addisov00.testtaskmts.presentation.states.ScreenEvent
-import com.addisov00.testtaskmts.presentation.states.ScreenState
+import com.addisov00.testtaskmts.presentation.main_screen.states.ScreenEffects
+import com.addisov00.testtaskmts.presentation.main_screen.states.ScreenEvent
+import com.addisov00.testtaskmts.presentation.main_screen.states.ScreenState
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -91,7 +91,6 @@ class MainFragment : Fragment() {
         binding.swipeRefresh.setOnRefreshListener {
             viewModel.newEvent(ScreenEvent.UpdateCurrencies)
         }
-
     }
 
 
@@ -99,7 +98,6 @@ class MainFragment : Fragment() {
         if (state.currentCurrencyList == null)
             viewModel.newEvent(ScreenEvent.SubscribeOnCurrencies)
 
-//        binding.pbCurrenciesLoading.visibility = if (state.isLoading) View.VISIBLE else View.GONE
         binding.swipeRefresh.isRefreshing = state.isLoading
         if (state.isSearching)
             currencyAdapter.submitList(state.searchingCurrencyList)
@@ -123,15 +121,13 @@ class MainFragment : Fragment() {
         Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
     }
 
-
     private fun setupMenu() {
-
         (requireActivity() as MainActivity).setSupportActionBar(binding.toolbar)
         (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
 
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.home_menu, menu)
-                val searchView = menu.findItem(R.id.actionSearct).actionView as SearchView
+                val searchView = menu.findItem(R.id.actionSearch).actionView as SearchView
                 searchView.queryHint = "search..."
                 searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String?): Boolean {
@@ -161,7 +157,5 @@ class MainFragment : Fragment() {
                 R.id.action_mainFragment_to_converterFragment, bundle
             )
         }
-
     }
-
 }

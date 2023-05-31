@@ -3,11 +3,12 @@ package com.addisov00.testtaskmts.presentation.main_screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.addisov00.testtaskmts.common.utills.InternetChecker
+import com.addisov00.testtaskmts.common.utills.WrongRequestException
 import com.addisov00.testtaskmts.domain.CurrencyRepository
 import com.addisov00.testtaskmts.domain.usecases.GetRubblesRateUseCase
-import com.addisov00.testtaskmts.presentation.states.ScreenEffects
-import com.addisov00.testtaskmts.presentation.states.ScreenEvent
-import com.addisov00.testtaskmts.presentation.states.ScreenState
+import com.addisov00.testtaskmts.presentation.main_screen.states.ScreenEffects
+import com.addisov00.testtaskmts.presentation.main_screen.states.ScreenEvent
+import com.addisov00.testtaskmts.presentation.main_screen.states.ScreenState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -35,7 +36,6 @@ class MainViewModel @Inject constructor(
     fun newEvent(event: ScreenEvent) {
         when (event) {
             is ScreenEvent.SearchCurrency -> {
-
                 _screenState.value = _screenState.value.copy(
                     isSearching = true,
                     searchingCurrencyList = _screenState.value.currentCurrencyList?.filter {
@@ -63,25 +63,28 @@ class MainViewModel @Inject constructor(
             }
 
             is ScreenEvent.UpdateCurrencies -> {
+                _screenState.value =
+                    _screenState.value.copy(isLoading = true, isSearching = false)
+                _screenEffect.value = ScreenEffects.Init
                 if (!internetChecker.isOnline()) {
                     _screenEffect.value = ScreenEffects.ShowNoInternetMessage
+                    _screenState.value = _screenState.value.copy(isLoading = false)
+
                 } else {
-                    _screenState.value =
-                        _screenState.value.copy(isLoading = true, isSearching = false)
                     viewModelScope.launch {
                         try {
                             repository.updateCurrencies()
+                        } catch (e: WrongRequestException) {
+                            _screenEffect.value = ScreenEffects.ShowErrorWhileLoading
                         } catch (e: Exception) {
                             _screenEffect.value = ScreenEffects.ShowErrorWhileLoading
                         }
                         _screenState.value = _screenState.value.copy(isLoading = false)
-
                     }
                 }
             }
         }
     }
-
 }
 
 

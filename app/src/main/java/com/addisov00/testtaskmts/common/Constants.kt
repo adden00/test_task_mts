@@ -6,5 +6,4 @@ object Constants {
     const val RUB = "RUB"
     const val CURRENCY_ITEM_KEY = "001"
     const val DATABASE_NAME = "currency_database"
-
 }

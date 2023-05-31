@@ -12,5 +12,4 @@ class App : Application() {
         appComponent = DaggerAppComponent.factory().create(this)
     }
 }
-
 fun Context.getAppComponent(): AppComponent = (this.applicationContext as App).appComponent

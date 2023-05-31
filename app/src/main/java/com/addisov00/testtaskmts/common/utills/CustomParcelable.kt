@@ -1,4 +1,4 @@
-package com.addisov00.testtaskmts.common
+package com.addisov00.testtaskmts.common.utills
 
 import android.os.Build
 import android.os.Bundle

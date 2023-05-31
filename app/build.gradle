@@ -17,8 +17,6 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -54,11 +52,9 @@ dependencies {
     implementation deps.okHttp
     implementation deps.kotlinx_serialization
     implementation deps.dagger
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
-    kapt deps.daggetKapt
+    implementation deps.swipe_refresh
     implementation deps.room
     implementation deps.roomKtx
+    kapt deps.daggetKapt
     kapt deps.roomKapt
-
-
 }

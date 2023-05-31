@@ -1,4 +1,4 @@
-package com.addisov00.testtaskmts.presentation.states
+package com.addisov00.testtaskmts.presentation.main_screen.states
 
 sealed class ScreenEvent {
     data class SearchCurrency(val query: String) : ScreenEvent()

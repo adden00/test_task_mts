@@ -1,5 +1,4 @@
 ext.versions = [
-
         buildTools           : '28.0.3',
         kotlin               : '1.8.10',
         androidGradlePlugin  : '7.3.1',
@@ -14,9 +13,8 @@ ext.versions = [
         retrofitSerialize    : '0.8.0',
         okHttp               : '4.11.0',
         dagger               : '2.45',
-        room                 : '2.5.1'
-
-
+        room                 : '2.5.1',
+        swipe_refresh        : '1.1.0'
 ]
 
 
@@ -38,6 +36,5 @@ ext.deps = [
         room                 : "androidx.room:room-runtime:${versions.room}",
         roomKapt             : "androidx.room:room-compiler:${versions.room}",
         roomKtx              : "androidx.room:room-ktx:${versions.room}",
-
-
+        swipe_refresh: "androidx.swiperefreshlayout:swiperefreshlayout:${versions.swipe_refresh}"
 ]
